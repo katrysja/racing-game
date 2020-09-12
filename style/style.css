@@ -18,6 +18,7 @@ table {
 
 body {
     line-height: 1;
+    overflow: hidden;
 }
 
 ol, ul {
@@ -36,14 +37,14 @@ blockquote:before, blockquote:after, q:before, q:after {
     position: absolute;
 }
 
-.hide {
-    display: none;
+.hidden {
+    visibility: hidden;
 }
 
 .car, .enemy {
     width: 50px;
     height: 100px;
-    background: transparent url('./image/player.png') center/ cover no-repeat;
+    background: transparent url(/image/player.png) center/ cover no-repeat;
     position: absolute;
     left: 125px;
     bottom: 10px;
@@ -54,7 +55,7 @@ blockquote:before, blockquote:after, q:before, q:after {
     height: 100vh;
     position: relative;
     margin: auto;
-    background: slategray;
+    background: #111111;
 }
 
 .line {
