@@ -35,6 +35,25 @@ blockquote:before, blockquote:after, q:before, q:after {
 
 .start {
     position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 2rem 0;
+    text-align: center;
+    z-index: 200;
+    color: #fff;
+    font-size: 1.5 rem;
+    background: #000;
+    cursor: pointer;
+    font-family: serif;
+    font-weight: 700;
+}
+
+.score {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .hidden {
@@ -50,18 +69,31 @@ blockquote:before, blockquote:after, q:before, q:after {
     bottom: 10px;
 }
 
+.game {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
 .gameArea {
     width: 300px;
     height: 100vh;
     position: relative;
     margin: auto;
     background: #111111;
+    overflow: hidden;
 }
 
 .line {
     position: absolute;
+    height: 40px;
     width: 10px;
-    height: 50px;
     background: rgb(235, 230, 230);
     left: 145px;
+}
+
+.level {
+    padding: 10px 30px;
+    cursor: pointer;
 }
