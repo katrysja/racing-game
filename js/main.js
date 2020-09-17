@@ -12,6 +12,14 @@ const setting = {
     traffic: 3
 };
 
+topScore.textContent = localStorage.getItem('nfjs_score',setting.score)?
+localStorage.setItem('nfjs_score',setting.score) 
+: 0;
+const addLocalStorage = ()=> {
+    localStorage.setItem('nfjs_score',setting.score);
+    topScore.textContent=setting.score
+}
+
 const keys = {
     ArrowUp: false,
     ArrowDown: false,
@@ -220,7 +228,8 @@ function moveEnemy() {
             start.classList.remove('hidden');
             audio.remove();
             start.style.stop = score.offsetHeight;
-        };
+            addLocalStorage()
+        }; 
 
         enemy.y += setting.speed / 2;
         enemy.style.top = enemy.y + 'px';

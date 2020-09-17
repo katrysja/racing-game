@@ -55,6 +55,16 @@ blockquote:before, blockquote:after, q:before, q:after {
     top: 0;
     left: 0;
 }
+#topScore{
+    position: fixed;
+    bottom: 0;
+    height: 200px;
+    width: 200px;
+    padding: 80px;
+    font-size: 30px;
+    background-color: #000;
+    color: #fff;
+}
 
 .hidden {
     visibility: hidden;
