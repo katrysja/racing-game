@@ -1,3 +1,5 @@
+
+'use strict';
 console.log('init!');
 
 // init default values
@@ -9,16 +11,23 @@ const setting = {
     start: false,
     score: 0,
     speed: 10,
-    traffic: 3
+    traffic: 3,
+    level:0,
 };
 
-topScore.textContent = localStorage.getItem('nfjs_score',setting.score)?
-localStorage.setItem('nfjs_score',setting.score) 
-: 0;
+let level= setting.level;
+
+const getLocalStorage = () =>  parseInt(localStorage.getItem('nfjs_score', setting.score));
+topScore.textContent = getLocalStorage() ? getLocalStorage() :0;
+
 const addLocalStorage = ()=> {
-    localStorage.setItem('nfjs_score',setting.score);
-    topScore.textContent=setting.score
-}
+    const result = getLocalStorage();
+    if ( !result || result < setting.score){
+        localStorage.setItem('nfjs_score',setting.score);
+        topScore.textContent=setting.score;
+} 
+    }
+  
 
 const keys = {
     ArrowUp: false,
@@ -30,6 +39,7 @@ const keys = {
 // get main DOM elements
 const score = document.querySelector('.score');
 const start = document.querySelector('.start');
+/*const topScore = document.getElementById('topScore');*/
 
 // level options
 const easy = document.querySelector('#easy');
@@ -46,10 +56,7 @@ gameArea.style.height = countSection * HEIGHT_ELEM;
 const car = document.createElement('div');
 car.classList.add('car');
 
-// listen main events
-start.addEventListener('click', startGame);
-document.addEventListener('keydown', onKeyDown);
-document.addEventListener('keyup', onKeyUp);
+
 
 // init game background music
 const audio = document.createElement('embed');
@@ -58,14 +65,13 @@ audio.src = './audio/background.mp3';
 audio.type = 'audio/mp3';
 
 
-createLines();
 
 
-function getQuantityElements(heightElement) {
-    return (gameArea.offsetHeight / heightElement) + 1;
-}
 
-function createLines() {
+const getQuantityElements = heightElement =>  (gameArea.offsetHeight / heightElement) + 1;
+
+
+const  createLines = () => {
     const qantityElementsCount = getQuantityElements(100);
 
     for (let i = 0; i < qantityElementsCount; i++) {
@@ -77,8 +83,8 @@ function createLines() {
         gameArea.appendChild(line);
     }
 }
-
-function changeLevel(event) {
+createLines();
+const changeLevel = event => {
     const target = event.target;
 
     switch (target.id) {
@@ -100,7 +106,7 @@ function changeLevel(event) {
 }
 
 // init game 
-function startGame(event) {
+const startGame = event => {
     changeLevel(event);
 
     audio.classList.add('hidden');
@@ -146,7 +152,12 @@ function startGame(event) {
     requestAnimationFrame(loop);
 }
 
-function loop() {
+const loop =() => {
+    setting.level=Math.floor(setting.score/1000);
+    if (setting.level!==level){
+        level= setting.level;
+        setting.speed+=1;
+    }
     if (setting.start) {
         setting.score += setting.speed;
         score.innerHTML = 'Score<br>' + setting.score;
@@ -177,7 +188,7 @@ function loop() {
     }
 }
 
-function onKeyDown(event) {
+const onKeyDown = event => {
     event.preventDefault();
 
     if (keys.hasOwnProperty(event.key)) {
@@ -187,7 +198,7 @@ function onKeyDown(event) {
     console.log('key down');
 }
 
-function onKeyUp(event) {
+const onKeyUp = event => {
     event.preventDefault();
 
     if (keys.hasOwnProperty(event.key)) {
@@ -197,7 +208,7 @@ function onKeyUp(event) {
     console.log('key up');
 }
 
-function moveRoad() {
+const moveRoad = () => {
     let lines = document.querySelectorAll('.line');
 
     lines.forEach(function (line) {
@@ -210,7 +221,7 @@ function moveRoad() {
     });
 }
 
-function moveEnemy() {
+const moveEnemy = () => {
     let enemys = document.querySelectorAll('.enemy');
 
     enemys.forEach(function (enemy) {
@@ -240,3 +251,7 @@ function moveEnemy() {
         }
     });
 }
+// listen main events
+start.addEventListener('click',startGame);
+document.addEventListener('keydown', onKeyDown);
+document.addEventListener('keyup', onKeyUp);
